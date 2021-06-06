@@ -49,23 +49,3 @@ function App() {
 }
 
 export default App;
-
-// <button
-//     onClick={onChangeHandler.bind(null, i, setLabelTypes)}
-//     className={labelTypes === i ? "active" : ""}
-//     disabled={!types.includes(i)}
-// >
-//   {item}
-// </button>
-
-// <li key={item}>
-//   <button
-//       onClick={onChangeHandler.bind(null, i, setLabelSize)}
-//       className={
-//         labelSize === i && sizes.includes(item) ? "active" : ""
-//       }
-//       disabled={!sizes.includes(item)}
-//   >
-//     {item} см.
-//   </button>
-// </li>
