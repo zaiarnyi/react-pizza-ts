@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { Header } from "./components/General/Header";
-import { Route, Switch, useLocation } from "react-router-dom";
-import { Home } from "./components/Pages/Home";
-import { Card } from "./components/Pages/Card";
-import { NoFound } from "./components/Pages/404";
-import { useDispatch, useSelector } from "react-redux";
-import { thunkGetPizzas } from "./components/Redux/Reducers/PizzaReducer";
-import { AppStateType } from "./components/Redux/Store";
-import { actionsCard } from "./components/Redux/Reducers/cardReducer";
+import React, {useEffect} from "react";
+import {Header} from "./components/General/Header";
+import {Route, Switch, useLocation} from "react-router-dom";
+import {Home} from "./components/Pages/Home";
+import {Card} from "./components/Pages/Card";
+import {NoFound} from "./components/Pages/404";
+import {useDispatch, useSelector} from "react-redux";
+import {thunkGetPizzas} from "./components/Redux/Reducers/PizzaReducer";
+import {AppStateType} from "./components/Redux/Store";
+import {actionsCard} from "./components/Redux/Reducers/cardReducer";
 
 function App() {
   const location = useLocation();

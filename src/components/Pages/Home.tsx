@@ -1,13 +1,13 @@
 import React from "react";
-import { Category } from "../Blocks/Category";
-import { Sort } from "../Blocks/Sort";
-import { useDispatch, useSelector } from "react-redux";
-import { AppStateType } from "../Redux/Store";
-import { PizzaBlock } from "../Blocks/PizzaBlock";
-import { IsLoadPizza } from "../Blocks/isLoadPizza";
-import { actionsFilter } from "../Redux/Reducers/filterReducer";
-import { IPizzaAdd } from "../Redux/Types/Types";
-import { actionsCard } from "../Redux/Reducers/cardReducer";
+import {Category} from "../Blocks/Category";
+import {Sort} from "../Blocks/Sort";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../Redux/Store";
+import {PizzaBlock} from "../Blocks/PizzaBlock";
+import {IsLoadPizza} from "../Blocks/isLoadPizza";
+import {actionsFilter} from "../Redux/Reducers/filterReducer";
+import {IPizzaAdd} from "../Redux/Types/Types";
+import {actionsCard} from "../Redux/Reducers/cardReducer";
 
 interface IHomeProp {}
 
@@ -18,7 +18,6 @@ export const Home: React.FC<IHomeProp> = (props) => {
     (state: AppStateType) => state.card.shippingPizza
   );
   const dispatch = useDispatch();
-  const sizesName = [26, 30, 40];
 
   //Func
   const onChangeCategory = (i: number | null) => {
@@ -39,15 +38,6 @@ export const Home: React.FC<IHomeProp> = (props) => {
       });
       return obj;
     };
-  };
-  const firstSizes = (num: number) => {
-    let count = 0;
-    sizesName.forEach((item, i) => {
-      if (item === num) {
-        count = i;
-      }
-    });
-    return count;
   };
 
   return (
@@ -73,8 +63,6 @@ export const Home: React.FC<IHomeProp> = (props) => {
                   rating={item.rating}
                   count={count()()[item.id]}
                   onAddPizzaToOrder={onAddPizzaToOrder}
-                  sizesName={sizesName}
-                  firstSizes={firstSizes(item.sizes[0])}
                 />
               );
             })

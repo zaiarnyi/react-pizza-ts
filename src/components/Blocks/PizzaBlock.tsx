@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { IPizza, IPizzaAdd } from "../Redux/Types/Types";
+import React, {useState} from "react";
+import {IPizza, IPizzaAdd} from "../Redux/Types/Types";
 import plusSvg from "../../assets/img/plus.svg";
 
 const onChangeHandler = (i: number, func: (num: number) => void) => {
@@ -8,19 +8,18 @@ const onChangeHandler = (i: number, func: (num: number) => void) => {
 interface IProps {
   count: number;
   onAddPizzaToOrder: (obj: IPizzaAdd) => void;
-  sizesName: Array<number>;
-  firstSizes: number;
 }
 export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
   const { id, imageUrl, name, types, sizes, price, category } = props; //ok
+  const sizesName = [26, 30, 40];
   const typesName = ["Тонкое", "Традиционное"]; //ok
+  const firstSizes = sizesName.findIndex((item) => item === props.sizes[0]);
   const [labelTypes, setLabelTypes] = useState(types[0]); //Ok
-  const [labelSize, setLabelSize] = useState(props.firstSizes); //Ok
-
+  const [labelSize, setLabelSize] = useState(firstSizes); //Ok
   const onAddPizzaToCard = {
-    [`${id}_${labelTypes}_${props.sizesName[labelSize]}`]: {
+    [`${id}_${labelTypes}_${sizesName[labelSize]}`]: {
       price: price[labelTypes][labelSize],
-      sizes: props.sizesName[labelSize],
+      sizes: sizesName[labelSize],
       name,
       imageUrl,
     },
@@ -48,7 +47,7 @@ export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
           })}
         </ul>
         <ul>
-          {props.sizesName.map((item, i) => {
+          {sizesName.map((item, i) => {
             return (
               <li key={item}>
                 <button
@@ -67,7 +66,7 @@ export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">
-          {price[labelTypes][labelSize] === price[types[0]][props.firstSizes] &&
+          {price[labelTypes][labelSize] === price[types[0]][firstSizes] &&
           !props.count
             ? "от " + price[labelTypes][labelSize] + " ₽"
             : price[labelTypes][labelSize] + " ₽"}
