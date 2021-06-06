@@ -48,7 +48,7 @@ export const thunkGetPizzas = (
   let category = cat !== null ? "category=" + cat + "&" : "",
     variable = sortArg === "price" ? sortArg + "[%270%27][%270%27]" : sortArg,
     sort = `_sort=${variable}&_order=${order}`,
-    url = `http://localhost:3001/pizzas`,
+    url = `/pizzas`,
     queryString = cat !== null || sort ? "?" : "";
 
   dispatch(actionsPizzas.changeLoading(true));
