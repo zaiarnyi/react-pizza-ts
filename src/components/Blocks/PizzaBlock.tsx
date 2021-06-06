@@ -82,7 +82,7 @@ export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">
-          {price[labelTypes][labelSize] === price[types[0]][0]
+          {price[labelTypes][labelSize] === price[types[0]][0] && !props.count
             ? "от " + price[labelTypes][labelSize] + " ₽"
             : price[labelTypes][labelSize] + " ₽"}
         </div>
