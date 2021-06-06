@@ -1,6 +1,5 @@
 import React from "react";
 import { exit, IEveryOrderPizzas } from "../Redux/Types/Types";
-import plusSvg from "../../assets/img/plus.svg";
 
 interface IProps extends IEveryOrderPizzas {
   onIncrementPizza: (e: React.MouseEvent<HTMLElement>, obj: exit) => void;

@@ -1,23 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppStateType } from "../Redux/Store";
-import { actionsFilter } from "../Redux/Reducers/filterReducer";
 
-interface ISortProp {}
+interface ISortProp {
+  onChangeSort: (i: number) => void;
+}
 
 export const Sort: React.FC<ISortProp> = React.memo((props) => {
-  const dispatch = useDispatch();
   const activeSort = useSelector(
     (state: AppStateType) => state.filter.activeSort
   );
   const sort = useSelector((state: AppStateType) => state.filter.sort);
   const [popup, setPopup] = useState(false);
   const sortRef = useRef(null);
-
   //Func
-  const onChangeSort = (i: number) => {
-    dispatch(actionsFilter.changeActiveSort(i));
-  };
   const onChangeViewPopup = () => {
     setPopup((prev) => !prev);
   };
@@ -61,7 +57,7 @@ export const Sort: React.FC<ISortProp> = React.memo((props) => {
                 <li
                   key={`${item.type}_${i}`}
                   className={activeSort === i ? "active" : ""}
-                  onClick={onChangeSort.bind(null, i)}
+                  onClick={props.onChangeSort.bind(null, i)}
                 >
                   {item.name}
                 </li>

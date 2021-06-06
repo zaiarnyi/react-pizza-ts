@@ -1,10 +1,13 @@
 import React from "react";
 import { Category } from "../Blocks/Category";
 import { Sort } from "../Blocks/Sort";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../Redux/Store";
 import { PizzaBlock } from "../Blocks/PizzaBlock";
 import { IsLoadPizza } from "../Blocks/isLoadPizza";
+import { actionsFilter } from "../Redux/Reducers/filterReducer";
+import { IPizzaAdd } from "../Redux/Types/Types";
+import { actionsCard } from "../Redux/Reducers/cardReducer";
 
 interface IHomeProp {}
 
@@ -14,6 +17,18 @@ export const Home: React.FC<IHomeProp> = (props) => {
   const orderPizzas = useSelector(
     (state: AppStateType) => state.card.shippingPizza
   );
+  const dispatch = useDispatch();
+
+  //Func
+  const onChangeCategory = (i: number | null) => {
+    dispatch(actionsFilter.changeActiveCategory(i));
+  };
+  const onChangeSort = (i: number) => {
+    dispatch(actionsFilter.changeActiveSort(i));
+  };
+  const onAddPizzaToOrder = (obj: IPizzaAdd) => {
+    dispatch(actionsCard.getShippingPizza(obj));
+  };
 
   const count = () => {
     let obj: { [key: string]: number } = {};
@@ -28,8 +43,8 @@ export const Home: React.FC<IHomeProp> = (props) => {
   return (
     <>
       <div className="content__top">
-        <Category />
-        <Sort />
+        <Category onChangeCategory={onChangeCategory} />
+        <Sort onChangeSort={onChangeSort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -47,6 +62,7 @@ export const Home: React.FC<IHomeProp> = (props) => {
                   category={item.category}
                   rating={item.rating}
                   count={count()()[item.id]}
+                  onAddPizzaToOrder={onAddPizzaToOrder}
                 />
               );
             })

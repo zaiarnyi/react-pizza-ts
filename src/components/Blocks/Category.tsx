@@ -1,28 +1,22 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { actionsFilter } from "../Redux/Reducers/filterReducer";
+import { useSelector } from "react-redux";
 import { AppStateType } from "../Redux/Store";
 
-interface ICategoryProp {}
+interface ICategoryProp {
+  onChangeCategory: (i: number | null) => void;
+}
 
 export const Category: React.FC<ICategoryProp> = React.memo((props) => {
   const name = useSelector((state: AppStateType) => state.filter.category);
   const activeCategory = useSelector(
     (state: AppStateType) => state.filter.activeCategory
   );
-  const dispatch = useDispatch();
-
-  //Func
-  const onChangeHandler = (i: number | null) => {
-    dispatch(actionsFilter.changeActiveCategory(i));
-  };
-
   return (
     <div className="categories">
       <ul>
         <li
           className={activeCategory === null ? "active" : ""}
-          onClick={onChangeHandler.bind(null, null)}
+          onClick={props.onChangeCategory.bind(null, null)}
         >
           Все
         </li>
@@ -31,7 +25,7 @@ export const Category: React.FC<ICategoryProp> = React.memo((props) => {
             <li
               key={`${name}_${i}`}
               className={activeCategory === i ? "active" : ""}
-              onClick={onChangeHandler.bind(null, i)}
+              onClick={props.onChangeCategory.bind(null, i)}
             >
               {name}
             </li>

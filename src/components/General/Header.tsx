@@ -6,7 +6,7 @@ import { AppStateType } from "../Redux/Store";
 
 interface IHeaderProp {}
 
-export const Header: React.FC<IHeaderProp> = (props) => {
+export const Header: React.FC<IHeaderProp> = React.memo((props) => {
   const count = useSelector((state: AppStateType) => state.card.countOrdered);
   const currency = useSelector((state: AppStateType) => state.card.currency);
   return (
@@ -58,4 +58,4 @@ export const Header: React.FC<IHeaderProp> = (props) => {
       </div>
     </div>
   );
-};
+});

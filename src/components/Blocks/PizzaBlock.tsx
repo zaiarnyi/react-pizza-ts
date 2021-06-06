@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { IPizza } from "../Redux/Types/Types";
-import { useDispatch } from "react-redux";
-import { actionsCard } from "../Redux/Reducers/cardReducer";
+import { IPizza, IPizzaAdd } from "../Redux/Types/Types";
 import plusSvg from "../../assets/img/plus.svg";
 
 const onChangeHandler = (i: number, func: (num: number) => void) => {
@@ -10,6 +8,7 @@ const onChangeHandler = (i: number, func: (num: number) => void) => {
 
 interface IProps {
   count: number;
+  onAddPizzaToOrder: (obj: IPizzaAdd) => void;
 }
 
 export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
@@ -18,22 +17,14 @@ export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
   const [labelSize, setLabelSize] = useState(0); //Ok
   const typesName = ["Тонкое", "Традиционное"]; //ok
   const sizesName = [26, 30, 40]; //ok
-  const dispatch = useDispatch(); //ok
-
-  //Func
-
-  const onAddPizzaToCard = () => {
-    const shippingPizza = {
-      [`${id}_${labelTypes}_${sizesName[labelSize]}`]: {
-        price: price[labelTypes][labelSize],
-        sizes: sizesName[labelSize],
-        name,
-        imageUrl,
-      },
-    };
-    dispatch(actionsCard.getShippingPizza(shippingPizza));
+  const onAddPizzaToCard = {
+    [`${id}_${labelTypes}_${sizesName[labelSize]}`]: {
+      price: price[labelTypes][labelSize],
+      sizes: sizesName[labelSize],
+      name,
+      imageUrl,
+    },
   };
-
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt={name} />
@@ -88,7 +79,7 @@ export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
         </div>
         <button
           className="button button--outline button--add"
-          onClick={onAddPizzaToCard}
+          onClick={props.onAddPizzaToOrder.bind(null, onAddPizzaToCard)}
         >
           <img src={plusSvg} alt="" />
           <span>Добавить</span>
