@@ -18,6 +18,7 @@ export const Home: React.FC<IHomeProp> = (props) => {
     (state: AppStateType) => state.card.shippingPizza
   );
   const dispatch = useDispatch();
+  const sizesName = [26, 30, 40];
 
   //Func
   const onChangeCategory = (i: number | null) => {
@@ -29,7 +30,6 @@ export const Home: React.FC<IHomeProp> = (props) => {
   const onAddPizzaToOrder = (obj: IPizzaAdd) => {
     dispatch(actionsCard.getShippingPizza(obj));
   };
-
   const count = () => {
     let obj: { [key: string]: number } = {};
     return () => {
@@ -40,6 +40,16 @@ export const Home: React.FC<IHomeProp> = (props) => {
       return obj;
     };
   };
+  const firstSizes = (num: number) => {
+    let count = 0;
+    sizesName.forEach((item, i) => {
+      if (item === num) {
+        count = i;
+      }
+    });
+    return count;
+  };
+
   return (
     <>
       <div className="content__top">
@@ -63,6 +73,8 @@ export const Home: React.FC<IHomeProp> = (props) => {
                   rating={item.rating}
                   count={count()()[item.id]}
                   onAddPizzaToOrder={onAddPizzaToOrder}
+                  sizesName={sizesName}
+                  firstSizes={firstSizes(item.sizes[0])}
                 />
               );
             })

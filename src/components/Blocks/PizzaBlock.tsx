@@ -5,22 +5,22 @@ import plusSvg from "../../assets/img/plus.svg";
 const onChangeHandler = (i: number, func: (num: number) => void) => {
   func(i);
 };
-
 interface IProps {
   count: number;
   onAddPizzaToOrder: (obj: IPizzaAdd) => void;
+  sizesName: Array<number>;
+  firstSizes: number;
 }
-
 export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
   const { id, imageUrl, name, types, sizes, price, category } = props; //ok
-  const [labelTypes, setLabelTypes] = useState(types[0]); //Ok
-  const [labelSize, setLabelSize] = useState(0); //Ok
   const typesName = ["Тонкое", "Традиционное"]; //ok
-  const sizesName = [26, 30, 40]; //ok
+  const [labelTypes, setLabelTypes] = useState(types[0]); //Ok
+  const [labelSize, setLabelSize] = useState(props.firstSizes); //Ok
+
   const onAddPizzaToCard = {
-    [`${id}_${labelTypes}_${sizesName[labelSize]}`]: {
+    [`${id}_${labelTypes}_${props.sizesName[labelSize]}`]: {
       price: price[labelTypes][labelSize],
-      sizes: sizesName[labelSize],
+      sizes: props.sizesName[labelSize],
       name,
       imageUrl,
     },
@@ -35,37 +35,31 @@ export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
         <ul>
           {typesName.map((item, i) => {
             return (
-              <li
-                key={i}
-                className={
-                  labelTypes === i
-                    ? "active"
-                    : !types.includes(i)
-                    ? "disabled"
-                    : ""
-                }
-                onClick={onChangeHandler.bind(null, i, setLabelTypes)}
-              >
-                {item}
+              <li key={i}>
+                <button
+                  onClick={onChangeHandler.bind(null, i, setLabelTypes)}
+                  className={labelTypes === i ? "active" : ""}
+                  disabled={!types.includes(i)}
+                >
+                  {item}
+                </button>
               </li>
             );
           })}
         </ul>
         <ul>
-          {sizesName.map((item, i) => {
+          {props.sizesName.map((item, i) => {
             return (
-              <li
-                key={item}
-                className={
-                  labelSize === i && sizes.includes(item)
-                    ? "active"
-                    : !sizes.includes(item)
-                    ? "disabled"
-                    : ""
-                }
-                onClick={onChangeHandler.bind(null, i, setLabelSize)}
-              >
-                {item} см.
+              <li key={item}>
+                <button
+                  onClick={onChangeHandler.bind(null, i, setLabelSize)}
+                  className={
+                    labelSize === i && sizes.includes(item) ? "active" : ""
+                  }
+                  disabled={!sizes.includes(item)}
+                >
+                  {item} см.
+                </button>
               </li>
             );
           })}
@@ -73,7 +67,8 @@ export const PizzaBlock: React.FC<IPizza & IProps> = React.memo((props) => {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">
-          {price[labelTypes][labelSize] === price[types[0]][0] && !props.count
+          {price[labelTypes][labelSize] === price[types[0]][props.firstSizes] &&
+          !props.count
             ? "от " + price[labelTypes][labelSize] + " ₽"
             : price[labelTypes][labelSize] + " ₽"}
         </div>
